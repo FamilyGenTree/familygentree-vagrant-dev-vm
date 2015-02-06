@@ -90,7 +90,7 @@ apache:
     modules:
         - rewrite
     vhosts:
-        kbodurfcodvy:
+        fgg:
             servername: fgg.apache2.dev
             serveraliases:
                 - www.fgg.apache2.dev
@@ -128,7 +128,7 @@ nginx:
         proxy_buffers: '4 256k'
     upstreams: {  }
     vhosts:
-        ohbv1dlrhlsx:
+        fgg:
             proxy: ''
             server_name: fgg.nginx.dev
             server_aliases:
