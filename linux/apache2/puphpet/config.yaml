@@ -191,6 +191,9 @@ xdebug:
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
         xdebug.remote_port: '9000'
+        xdebug.var_display_max_children: '50'
+        xdebug.var_display_max_data: '100'
+        xdebug.var_display_max_depth: '100'
 xhprof:
     install: '0'
 wpcli:
