@@ -1,7 +1,7 @@
-# Vagrant development box for [FamilyGenealogyTree/familygenealogytree](https://github.com/FamilyGenealogyTree/familygenealogytree)
+# Vagrant development box for [FamilyGenTree/familygentree](https://github.com/FamilyGenTree/familygentree)
 
-Don't use this repo directly. It is meant to work as sub-module in FamilyGenealogyTree/familygenealogytree under `tools/vagrant`.
-Please checkout FamilyGenealogyTree/familygenealogytree and ran there the VAGRANT.sh.
+Don't use this repo directly. It is meant to work as sub-module in FamilyGenTree/familygentree under `tools/vagrant`.
+Please checkout FamilyGenTree/familygentree and ran there the VAGRANT.sh.
 
 # Vagrant - Usage
 
