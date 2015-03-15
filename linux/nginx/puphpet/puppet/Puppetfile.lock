@@ -7,7 +7,6 @@ FORGE
       puppetlabs-stdlib (>= 3.2.0)
     puppetlabs-git (0.3.0)
       puppetlabs-vcsrepo (>= 0.1.0)
-    puppetlabs-stdlib (4.4.0)
     stahnma-epel (1.0.0)
     thias-sysctl (0.3.0)
 
@@ -45,16 +44,6 @@ GIT
       puppetlabs-apt (>= 0)
       puppetlabs-stdlib (>= 0)
       stahnma-epel (>= 0)
-
-GIT
-  remote: https://github.com/jfryman/puppet-nginx.git
-  ref: v0.0.10
-  sha: 3427ab91609d753446ab8fcfde4ff25cd9c5c290
-  specs:
-    jfryman-nginx (0.0.10)
-      puppetlabs-apt (>= 1.0.0)
-      puppetlabs-concat (>= 1.1.0)
-      puppetlabs-stdlib (>= 3.0.0)
 
 GIT
   remote: https://github.com/nanliu/puppet-staging.git
@@ -95,17 +84,27 @@ GIT
       puppetlabs-stdlib (>= 2.2.1)
 
 GIT
+  remote: https://github.com/puphpet/puppet-nginx.git
+  ref: 42573a0
+  sha: 42573a0bb729c82c224df0cd9fad29e054e09a4b
+  specs:
+    jfryman-nginx (0.0.10)
+      puppetlabs-apt (>= 1.0.0)
+      puppetlabs-concat (>= 1.1.0)
+      puppetlabs-stdlib (>= 3.0.0)
+
+GIT
   remote: https://github.com/puphpet/puppet-php.git
-  ref: a1dad7828d
-  sha: a1dad7828d997bbd97db32883baef6003ac1c33e
+  ref: eb14528
+  sha: eb14528a5c8178b919c7b6a13dd6043bd5c8e217
   specs:
     puphpet-php (2.0.17)
       example42-puppi (>= 2.0.0)
 
 GIT
   remote: https://github.com/puphpet/puppet-puphpet.git
-  ref: d3bd2a6
-  sha: d3bd2a695e70d5a18f7d13dcc13d97a2a4e8527e
+  ref: 722e1e8
+  sha: 722e1e8db55399a8aecef851965d854b38746471
   specs:
     puphpet-puphpet (1.0)
 
@@ -225,6 +224,13 @@ GIT
   sha: 8957339fc7a9d8c89843d99a30e8ac00ac294beb
   specs:
     puppetlabs-sqlite (0.0.1)
+
+GIT
+  remote: https://github.com/puppetlabs/puppetlabs-stdlib.git
+  ref: 4dab70b305
+  sha: 4dab70b305c4ab1c8c36356efa4bd205678c7c49
+  specs:
+    puppetlabs-stdlib (4.5.1)
 
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-vcsrepo.git

@@ -10,7 +10,7 @@ vagrantfile-local:
         network:
             private_network: 192.168.56.202
             forwarded_port:
-                HU1Uh7rqybri:
+                QLpt6LgNc0xe:
                     host: '8767'
                     guest: '22'
         post_up_message: ''
@@ -32,7 +32,7 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            lbgvLqiAj0Uw:
+            znu8D6NuFJD7:
                 owner: www-data
                 group: www-data
                 source: ./
@@ -77,11 +77,11 @@ cron:
     jobs: {  }
 firewall:
     install: '1'
-    rules: null
+    rules: {  }
 apache:
     install: '1'
     settings:
-        user: vagrant
+        user: www-data
         group: www-data
         default_vhost: true
         manage_user: false
@@ -100,7 +100,7 @@ apache:
             setenv:
                 - 'APP_ENV dev'
             directories:
-                adwpucbtmgov:
+                4rrq4r9awtts:
                     provider: directory
                     path: /var/www/fgg
                     options:
@@ -136,17 +136,14 @@ nginx:
                 - test.fgg.nginx.dev
             www_root: /var/www/fgg
             listen_port: '80'
-            location: \.php$
             index_files:
                 - index.html
                 - index.htm
                 - index.php
-            envvars:
-                - 'APP_ENV dev'
-            engine: php
             client_max_body_size: 1m
             ssl_cert: ''
             ssl_key: ''
+            ssl_port: ''
 php:
     install: '1'
     version: '54'
@@ -168,7 +165,6 @@ php:
         display_errors: On
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
-    timezone: Europe/Berlin
     mod_php: 0
 hhvm:
     install: '0'
@@ -205,7 +201,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        cdhqejwkngQd:
+        cUtpURpej9qI:
             default: '1'
             version: 1.9.3
             gems:
@@ -218,21 +214,30 @@ python:
     install: '1'
     packages: {  }
     versions:
-        0dZPaRMzrGhi:
+        KQuHHNSdoQvc:
             version: ''
 mysql:
     install: '1'
-    override_options: {  }
-    root_password: fgg
+    settings:
+        override_options: {  }
+        root_password: fgg
     adminer: 0
     databases:
-        Fkox0H0DCiBL:
+        ZIgyjx9OoM1f:
             grant:
                 - ALL
             name: fgg_dev
             host: localhost
             user: fgg_dbu
             password: fgg
+            sql_file: ''
+        uiD6wBfY5g0A:
+            grant:
+                - ALL
+            name: testdb
+            host: localhost
+            user: testdb
+            password: testdb
             sql_file: ''
 postgresql:
     install: '0'
@@ -245,11 +250,11 @@ postgresql:
     adminer: 0
 mariadb:
     install: '0'
-    override_options: {  }
-    root_password: '123'
+    settings:
+        override_options: {  }
+        root_password: '123'
     adminer: 0
     databases: {  }
-    version: '10.0'
 sqlite:
     install: '1'
     adminer: 0
