@@ -10,7 +10,7 @@ vagrantfile-local:
         network:
             private_network: 192.168.56.202
             forwarded_port:
-                QLpt6LgNc0xe:
+                0kAU6BcNhI9n:
                     host: '8767'
                     guest: '22'
         post_up_message: ''
@@ -32,11 +32,11 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            znu8D6NuFJD7:
+            4AybH4L3xa4v:
                 owner: www-data
                 group: www-data
                 source: ./
-                target: /var/www/fgg
+                target: /var/www/fgt
                 sync_type: nfs
                 rsync:
                     args:
@@ -66,6 +66,7 @@ server:
     packages:
         - vim
         - htop
+        - mc
 users_groups:
     install: '1'
     groups:
@@ -90,19 +91,21 @@ apache:
     modules:
         - rewrite
     vhosts:
-        fgg:
-            servername: fgg.apache2.dev
+        fgt:
+            servername: fgt.apache2.dev
             serveraliases:
                 - www.fgg.apache2.dev
-                - test.fgg.apache2.dev
-            docroot: /var/www/fgg
+                - www.fgt.apache2.dev
+                - fgg.apache2.dev
+            docroot: /var/www/fgt
             port: '80'
             setenv:
                 - 'APP_ENV dev'
+            custom_fragment: ''
             directories:
-                4rrq4r9awtts:
+                lcszl7mj6ckz:
                     provider: directory
-                    path: /var/www/fgg
+                    path: /var/www/fgt
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -113,13 +116,10 @@ apache:
                         - all
                         - granted
                     custom_fragment: ''
-            engine: php
-            custom_fragment: ''
             ssl_cert: ''
             ssl_key: ''
             ssl_chain: ''
             ssl_certs_dir: ''
-    mod_pagespeed: 0
 nginx:
     install: '0'
     settings:
@@ -128,7 +128,7 @@ nginx:
         proxy_buffers: '4 256k'
     upstreams: {  }
     vhosts:
-        fgg:
+        fgt:
             proxy: ''
             server_name: fgg.nginx.dev
             server_aliases:
@@ -146,7 +146,10 @@ nginx:
             ssl_port: ''
 php:
     install: '1'
-    version: '54'
+    settings:
+        version: '54'
+    fpm_settings:
+        port: 9000
     composer: '1'
     composer_home: ''
     modules:
@@ -165,7 +168,7 @@ php:
         display_errors: On
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
-    mod_php: 0
+        max_execution_time: '3000'
 hhvm:
     install: '0'
     nightly: 0
@@ -201,10 +204,11 @@ drush:
 ruby:
     install: '1'
     versions:
-        cUtpURpej9qI:
+        2lz6JhfXK5F0:
             default: '1'
             version: 1.9.3
             gems:
+                - compass
                 - composer
             bundler: '1'
 nodejs:
@@ -214,47 +218,52 @@ python:
     install: '1'
     packages: {  }
     versions:
-        KQuHHNSdoQvc:
+        2qfytTGEFgW2:
             version: ''
 mysql:
     install: '1'
     settings:
+        version: '5.5'
+        root_password: fgt
         override_options: {  }
-        root_password: fgg
     adminer: 0
-    databases:
-        ZIgyjx9OoM1f:
-            grant:
-                - ALL
-            name: fgg_dev
-            host: localhost
-            user: fgg_dbu
-            password: fgg
-            sql_file: ''
-        uiD6wBfY5g0A:
-            grant:
-                - ALL
+    users:
+        ePnJGpooH5NU:
+            name: fgt_dbu
+            password: fgt
+        2A9NyfEHhemd:
             name: testdb
-            host: localhost
-            user: testdb
             password: testdb
-            sql_file: ''
+    databases:
+        9rHzEjxIKQ2V:
+            name: fgt_dev
+            sql: ''
+        syRS9FLrlvAq:
+            name: testdb
+            sql: ''
+    grants:
+        zYVvoi1lIxMf:
+            user: fgt_dbu
+            table: 'fgt_dev.*'
+            privileges:
+                - ALL
+        yIryJwRCPa1E:
+            user: testdb
+            table: 'testdb.*'
+            privileges:
+                - ALL
 postgresql:
     install: '0'
     settings:
-        root_password: '123'
-        user_group: postgres
-        encoding: UTF8
-        version: '9.3'
+        global:
+            encoding: UTF8
+            version: '9.3'
+        server:
+            postgres_password: ''
     databases: {  }
+    users: {  }
+    grants: {  }
     adminer: 0
-mariadb:
-    install: '0'
-    settings:
-        override_options: {  }
-        root_password: '123'
-    adminer: 0
-    databases: {  }
 sqlite:
     install: '1'
     adminer: 0
@@ -263,6 +272,7 @@ mongodb:
     install: '0'
     settings:
         auth: 1
+        bind_ip: 127.0.0.1
         port: '27017'
     databases: {  }
 redis:
@@ -294,6 +304,9 @@ rabbitmq:
     install: '0'
     settings:
         port: '5672'
+    users: {  }
+    vhosts: {  }
+    plugins: {  }
 elastic_search:
     install: '0'
     settings:

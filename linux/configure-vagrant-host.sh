@@ -8,7 +8,7 @@ SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
 ### settings
 
-PROJECT_NAME=fgg
+PROJECT_NAME=fgt
 declare -A VM_IPS
 VM_IPS[apache2]='192.168.56.202'
 VM_IPS[nginx]='192.168.56.201'
