@@ -3,14 +3,14 @@ vagrantfile-local:
     vm:
         box: puphpet/debian75-x64
         box_url: puphpet/debian75-x64
-        hostname: dev-apache2-fgg-vagrant
+        hostname: dev-apache2-fgt-vagrant
         memory: '1024'
         cpus: '2'
         chosen_provider: virtualbox
         network:
             private_network: 192.168.56.202
             forwarded_port:
-                0kAU6BcNhI9n:
+                na6NkgJd0s6U:
                     host: '8767'
                     guest: '22'
         post_up_message: ''
@@ -32,7 +32,7 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            4AybH4L3xa4v:
+            MHaWoqbZb3QX:
                 owner: www-data
                 group: www-data
                 source: ./
@@ -103,7 +103,7 @@ apache:
                 - 'APP_ENV dev'
             custom_fragment: ''
             directories:
-                lcszl7mj6ckz:
+                jlj6x0d6ejmn:
                     provider: directory
                     path: /var/www/fgt
                     options:
@@ -113,8 +113,7 @@ apache:
                     allow_override:
                         - All
                     require:
-                        - all
-                        - granted
+                        - 'all granted'
                     custom_fragment: ''
             ssl_cert: ''
             ssl_key: ''
@@ -162,8 +161,7 @@ php:
             - mysql
             - readline
         pear: {  }
-        pecl:
-            - pecl_http
+        pecl: {  }
     ini:
         display_errors: On
         error_reporting: '-1'
@@ -204,7 +202,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        2lz6JhfXK5F0:
+        aSsMeYFOWmYR:
             default: '1'
             version: 1.9.3
             gems:
@@ -218,7 +216,7 @@ python:
     install: '1'
     packages: {  }
     versions:
-        2qfytTGEFgW2:
+        Mb2lOkmeo9Gb:
             version: ''
 mysql:
     install: '1'
@@ -228,26 +226,26 @@ mysql:
         override_options: {  }
     adminer: 0
     users:
-        ePnJGpooH5NU:
+        rlQo2euIL1th:
             name: fgt_dbu
             password: fgt
-        2A9NyfEHhemd:
+        H9jAxrqOjXqO:
             name: testdb
             password: testdb
     databases:
-        9rHzEjxIKQ2V:
+        Ylpxq9gw7wxv:
             name: fgt_dev
             sql: ''
-        syRS9FLrlvAq:
+        nUn4hSVcfT62:
             name: testdb
             sql: ''
     grants:
-        zYVvoi1lIxMf:
+        c0EE8oRcueXu:
             user: fgt_dbu
             table: 'fgt_dev.*'
             privileges:
                 - ALL
-        yIryJwRCPa1E:
+        opJFF8gfMfQX:
             user: testdb
             table: 'testdb.*'
             privileges:
