@@ -3,7 +3,7 @@ vagrantfile:
     vm:
         provider:
             local:
-                box: puphpet/debian75-x64
+                box: puphpet/ubuntu1604-x64
                 box_url: puphpet/debian75-x64
                 box_version: '0'
                 chosen_virtualizer: virtualbox
@@ -15,17 +15,17 @@ vagrantfile:
                     vmware:
                         numvcpus: 1
                     parallels:
-                        use_linked_clone: 0
+                        linked_clone: 0
                         check_guest_tools: 0
                         update_guest_tools: 0
                 machines:
-                    vflm_1h11m69ralqm:
-                        id: fgt1
+                    vflm_0c7lbvbvzenh:
+                        id: fgta
                         hostname: fgt-apache2.dev
                         network:
                             private_network: 192.168.56.202
                             forwarded_port:
-                                vflmnfp_h3uopuol806q:
+                                vflmnfp_znxdi2uai5qo:
                                     host: '7943'
                                     guest: '22'
                         memory: '512'
@@ -33,12 +33,16 @@ vagrantfile:
         provision:
             puppet:
                 manifests_path: puphpet/puppet/manifests
-                module_path: puphpet/puppet/modules
+                module_path:
+                    - puphpet/puppet/modules
+                    - puphpet/puppet/manifests
                 options:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
         synced_folder:
-            vflsf_4b3bd5vx0fzd:
+            vflsf_2y5rredmrgbb:
+                owner: www-data
+                group: www-data
                 source: ./
                 target: /var/www/fgt
                 sync_type: nfs
@@ -58,8 +62,6 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
-                owner: www-data
-                group: www-data
         usable_port_range:
             start: 10200
             stop: 10500
@@ -87,6 +89,7 @@ server:
     packages:
         - htop
         - vim
+        - mc
 users_groups:
     install: '1'
     groups:
@@ -96,52 +99,52 @@ users_groups:
 locale:
     install: '1'
     settings:
-        default_locale: ''
+        default_locale: en_US.UTF-8
         locales:
+            - de_DE.UTF-8
             - en_GB.UTF-8
             - en_US.UTF-8
-            - de_DE.UTF-8
         timezone: UTC
 firewall:
     install: '1'
     rules: {  }
+resolv:
+    install: '1'
+    nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    domainname: ''
+    searchpath: {  }
 cron:
     install: '1'
     jobs: {  }
 nginx:
     install: '0'
     settings:
+        version: present
         default_vhost: 1
-        proxy_buffer_size: 128k
         proxy_buffers: '4 256k'
+        proxy_buffer_size: 128k
         proxy_connect_timeout: 600s
         proxy_send_timeout: 600s
         proxy_read_timeout: 600s
         names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        nxv_f4cakaytm1s2:
+        nxv_fqt94j2et9cg:
             server_name: awesome.dev
             server_aliases:
                 - www.awesome.dev
             www_root: /var/www/awesome
             listen_port: '80'
-            index_files:
-                - index.html
-                - index.htm
-                - index.php
             client_max_body_size: 1m
             ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_port: '443'
-            ssl_protocols: ''
-            ssl_ciphers: ''
-            rewrite_to_https: '1'
-            spdy: '1'
             locations:
-                nxvl_wa5wjxuqhp1m:
+                nxvl_7xfq3y8l5hkl:
+                    www_root: ''
                     location: /
+                    autoindex: 'off'
+                    internal: 'false'
                     try_files:
                         - $uri
                         - $uri/
@@ -151,8 +154,11 @@ nginx:
                     fastcgi_split_path: ''
                     proxy: ''
                     proxy_redirect: ''
-                nxvl_qswzqw315gbo:
+                nxvl_mrd78070gj7c:
+                    www_root: ''
                     location: '~ \.php$'
+                    autoindex: 'off'
+                    internal: 'false'
                     try_files:
                         - $uri
                         - $uri/
@@ -182,27 +188,27 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_kyjk8ou91bvo:
+        av_alcbzsxc68r8:
             servername: fgt.apache2.dev
             serveraliases:
                 - www.fgt.apache2.dev
+                - api.fgt.apache2.dev
             docroot: /var/www/fgt
             port: '80'
-            setenv:
-                - 'APP_ENV dev'
             setenvif:
                 - 'Authorization "(.*)" HTTP_AUTHORIZATION=$1'
             custom_fragment: ''
             ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_chain: ''
-            ssl_certs_dir: ''
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
+            ssl_chain: LETSENCRYPT
+            ssl_certs_dir: LETSENCRYPT
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_wlcyhm5vilhy:
+                avd_gbovfwvzqeq6:
                     path: /var/www/fgt
+                    directoryindex: 'app_dev.php, app_dev.php'
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -212,22 +218,17 @@ apache:
                     require:
                         - 'all granted'
                     custom_fragment: ''
-                    files_match:
-                        avdfm_3oquddch7dnz:
-                            path: \.php$
-                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
-                            custom_fragment: ''
-                            provider: filesmatch
                     provider: directory
 letsencrypt:
     install: '1'
     settings:
         email: ''
+        webserver_service: ''
     domains: {  }
 php:
     install: '1'
     settings:
-        version: '55'
+        version: '7.1'
     modules:
         php:
             - cli
@@ -245,7 +246,7 @@ php:
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
-        phpfp_83qovzauthm1:
+        phpfp_evil8y3ltyuu:
             ini:
                 prefix: www
                 listen: '127.0.0.1:9000'
@@ -288,7 +289,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        rv_v7ghq6784k56:
+        rv_lz817qwra9zi:
             default: '1'
             bundler: '1'
             version: 1.9.3
@@ -305,38 +306,22 @@ nodejs:
     settings:
         version: '5'
     npm_packages: {  }
-hhvm:
-    install: '0'
-    nightly: 0
-    composer: '1'
-    composer_home: ''
-    settings: {  }
-    server_ini:
-        hhvm.server.host: 127.0.0.1
-        hhvm.server.port: '9000'
-        hhvm.log.use_log_file: '1'
-        hhvm.log.file: /var/log/hhvm/error.log
-    php_ini:
-        display_errors: 'On'
-        error_reporting: '-1'
-        date.timezone: UTC
 mariadb:
     install: '0'
     settings:
         version: '10.1'
         root_password: '123'
         override_options: {  }
-    adminer: 0
     users:
-        mariadbnu_86nrv3w363qe:
+        mariadbnu_b9ng10fo49h7:
             name: dbuser
             password: '123'
     databases:
-        mariadbnd_x9yktd6k0orx:
+        mariadbnd_nex3ylpwv2na:
             name: dbname
             sql: ''
     grants:
-        mariadbng_g2y0txmfkeaf:
+        mariadbng_97luxxffzwe1:
             user: dbuser
             table: '*.*'
             privileges:
@@ -344,31 +329,30 @@ mariadb:
 mysql:
     install: '1'
     settings:
-        version: '5.5'
+        version: '5.6'
         root_password: fgt
         override_options: {  }
-    adminer: '1'
     users:
-        mysqlnu_pfhflrtl9nn2:
+        mysqlnu_vqngxbnewsr4:
             name: fgt_dbu
             password: fgt
-        mysqlnu_oi3hnfpxdvmt:
+        mysqlnu_fkpyd1zaxa1x:
             name: test_dbu
             password: test
     databases:
-        mysqlnd_5tgky2syqr1d:
+        mysqlnd_485tmj8ky0ib:
             name: fgt_db
             sql: ''
-        mysqlnd_7ob0u690sarc:
+        mysqlnd_8l524cywax25:
             name: fgt_test
             sql: ''
     grants:
-        mysqlng_f43ivde72evd:
+        mysqlng_o13ng9y2zror:
             user: fgt_dbu
             table: 'fgt_db.*'
             privileges:
                 - ALL
-        mysqlng_7widcsjx0tmx:
+        mysqlng_u6fo1h1e4all:
             user: test_dbu
             table: 'fgt_test.*'
             privileges:
@@ -384,7 +368,6 @@ postgresql:
     databases: {  }
     users: {  }
     grants: {  }
-    adminer: 0
 mongodb:
     install: '0'
     settings:
@@ -399,7 +382,6 @@ redis:
         port: '6379'
 sqlite:
     install: '1'
-    adminer: '1'
     databases: {  }
 mailhog:
     install: '1'
@@ -433,7 +415,7 @@ elastic_search:
         version: 2.3.1
         java_install: true
     instances:
-        esi_4g5u78jvnsfg:
+        esi_zwr8mi1rplet:
             name: es-01
 solr:
     install: '0'
